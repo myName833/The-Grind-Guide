@@ -16,12 +16,13 @@ const StudyTimer = () => {
       interval = setInterval(() => {
         setTime((time) => time - 1)
       }, 1000)
-    } else if (time === 0) {
+    } else if (time === 0 && isActive) {
       setIsActive(false)
+      alert("Time's up! Take a break or start another session.")
     }
     return () => clearInterval(interval)
   }, [isActive, time])
-
+  
   const toggleTimer = () => {
     if (!isActive && time === 0 && inputMinutes) {
       setTime(Number.parseInt(inputMinutes) * 60)

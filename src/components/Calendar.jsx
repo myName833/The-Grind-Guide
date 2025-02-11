@@ -19,7 +19,13 @@ const Calendar = () => {
       setEvents(JSON.parse(storedEvents));
     }
   }, []);
-
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem("calendarData"));
+    if (savedData) {
+      setCalendarData(savedData);
+    }
+  }, []);
+  
   useEffect(() => {
     localStorage.setItem('calendarEvents', JSON.stringify(events));
   }, [events]);

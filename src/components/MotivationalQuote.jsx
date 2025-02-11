@@ -26,9 +26,9 @@ const MotivationalQuote = () => {
   }, [])
 
   return (
-    <Card className="mt-8 bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+    <Card className="mt-12 bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
       <CardContent className="p-6">
-        <p className="text-2xl font-bold mb-4 italic">"{currentQuote.text}"</p>
+        <p className="text-2xl font-bold mb-4 italic mt-6">"{currentQuote.text}"</p>
         <p className="text-lg text-right">- {currentQuote.author}</p>
       </CardContent>
     </Card>
@@ -36,4 +36,3 @@ const MotivationalQuote = () => {
 }
 
 export default MotivationalQuote
-
