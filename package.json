@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@react-oauth/google": "^0.12.1",
     "build": "^0.1.4",
     "cors": "^2.8.5",
@@ -20,6 +23,7 @@
     "lucide-react": "^0.475.0",
     "npm": "^11.1.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "run": "^1.5.0"
   },
