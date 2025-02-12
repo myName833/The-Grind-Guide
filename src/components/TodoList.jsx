@@ -1,9 +1,9 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { PlusCircle } from "lucide-react"
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import { PlusCircle } from 'lucide-react'
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import TodoItem from "./TodoItem"
@@ -18,7 +18,7 @@ const TodoList = () => {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    })
   )
 
   useEffect(() => {
@@ -37,7 +37,11 @@ const TodoList = () => {
   const addTodo = (e) => {
     e.preventDefault()
     if (newTodo.trim() !== "") {
-      setTodos((prevTodos) => [...prevTodos, { id: Date.now().toString(), text: newTodo, completed: false }])
+      setTodos((prevTodos) => [
+        { id: Date.now().toString(), text: newTodo, completed: false },
+        ...prevTodos.filter(todo => !todo.completed),
+        ...prevTodos.filter(todo => todo.completed)
+      ])
       setNewTodo("")
     }
   }
@@ -57,7 +61,10 @@ const TodoList = () => {
         }
         return todo
       })
-      return updatedTodos
+      return [
+        ...updatedTodos.filter(todo => !todo.completed),
+        ...updatedTodos.filter(todo => todo.completed)
+      ]
     })
   }, [])
 
@@ -76,7 +83,11 @@ const TodoList = () => {
       setTodos((items) => {
         const oldIndex = items.findIndex((item) => item.id === active.id)
         const newIndex = items.findIndex((item) => item.id === over.id)
-        return arrayMove(items, oldIndex, newIndex)
+        const newItems = arrayMove(items, oldIndex, newIndex)
+        return [
+          ...newItems.filter(todo => !todo.completed),
+          ...newItems.filter(todo => todo.completed)
+        ]
       })
     }
   }
@@ -100,8 +111,15 @@ const TodoList = () => {
             Add
           </Button>
         </form>
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={todos} strategy={verticalListSortingStrategy}>
+        <DndContext 
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext 
+            items={todos}
+            strategy={verticalListSortingStrategy}
+          >
             <ul className="space-y-4">
               {todos.map((todo) => (
                 <TodoItem
@@ -126,4 +144,3 @@ const TodoList = () => {
 }
 
 export default TodoList
-

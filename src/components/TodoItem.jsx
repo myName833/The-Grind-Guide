@@ -6,7 +6,6 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
-import { Checkbox } from "../components/ui/checkbox"
 import Timer from "./Timer"
 
 const TodoItem = ({ id, todo, onToggle, onEdit, onDelete }) => {
@@ -40,7 +39,14 @@ const TodoItem = ({ id, todo, onToggle, onEdit, onDelete }) => {
         <button className="cursor-move" {...listeners}>
           <GripVertical className="h-5 w-5 text-gray-400" />
         </button>
-        <Checkbox checked={todo.completed} onCheckedChange={() => onToggle(todo.id)} id={`todo-${todo.id}`} />
+        <button
+          onClick={() => onToggle(todo.id)}
+          className={`w-5 h-5 border-2 rounded flex items-center justify-center ${
+            todo.completed ? "bg-teal-500 border-teal-500" : "border-gray-300"
+          }`}
+        >
+          {todo.completed && <Check className="h-4 w-4 text-white" />}
+        </button>
         {isEditing ? (
           <>
             <Input type="text" value={editText} onChange={(e) => setEditText(e.target.value)} className="flex-grow" />
@@ -58,10 +64,7 @@ const TodoItem = ({ id, todo, onToggle, onEdit, onDelete }) => {
           </>
         ) : (
           <>
-            <label
-              htmlFor={`todo-${todo.id}`}
-              className={`flex-grow ${todo.completed ? "line-through text-gray-400" : "text-gray-700"}`}
-            >
+            <label className={`flex-grow ${todo.completed ? "line-through text-gray-400" : "text-gray-700"}`}>
               {todo.text}
             </label>
             <Timer onComplete={handleComplete} />
